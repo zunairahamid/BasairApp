@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "30506608033",
+    "project_id": "basairapp-2d9ce",
+    "storage_bucket": "basairapp-2d9ce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30506608033:android:a81a024d1a3220385a97e0",
+        "android_client_info": {
+          "package_name": "com.example.sdp_quran_navigator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkVBA_0NoRgC4BlSXziiyL-HjpSjTWLqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

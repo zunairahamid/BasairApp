@@ -1,0 +1,57 @@
+name: sdp_quran_navigator
+description: "A Quran navigation application with Firebase integration."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.6.2 <4.0.0"
+  flutter: ">=3.16.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  go_router: ^14.8.1
+  quran: ^1.3.3
+  audioplayers: ^6.4.0
+  to_arabic_number: ^1.0.1
+  flutter_riverpod: ^2.0.0
+  supabase_flutter: ^2.8.1 
+  # Firebase packages
+  json_annotation: ^4.8.1
+  
+  # Other packages
+  cached_network_image: ^3.3.0
+  shared_preferences: ^2.2.2
+  flutter_dotenv: ^5.1.0
+  freezed_annotation: ^3.0.0
+  uuid: ^4.4.0
+  app_links: ^5.0.0 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
+  freezed: ^3.0.6
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/data/
+    - assets/fonts/
+
+  fonts:
+    - family: CrimsonText
+      fonts:
+        - asset: assets/fonts/CrimsonText-Regular.ttf
+    - family: AmiriQuran
+      fonts:
+        - asset: assets/fonts/AmiriQuran-Regular.ttf
+    - family: Hafs
+      fonts:
+        - asset: assets/fonts/Hafs.ttf

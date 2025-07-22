@@ -1,0 +1,79 @@
+[
+  {
+    "id": 0,
+    "title_en": "Key rights principles that protect human life: children and women [1]",
+    "title_ar": "بداية بحث الحياة الإنسانية - الطفل والمرأة [١]",
+    "ayah": "[1][١]",
+    "subtopics": []
+  },
+  {
+    "id": 1,
+    "title_en": "Beginning the discussion on human life: children and women [14-2]",
+    "title_ar": "المحور الأول: بداية بحث الحياة الإنسانية - الطفل والمرأة [٢-١٤]",
+    "ayah": "[14-2] [٢-١٤]",
+    "subtopics": [
+      {
+        "id": "1.1",
+        "en": "Children's financial rights [2]",
+        "ar": "الحقوق المالية العامة للطفل (للأطفال اليتامى) [٢]",
+        "ayah": "[2][٢]"
+      },
+      {
+        "id": "1.2",
+        "en": "Marriage and orphan protection [4-3]",
+        "ar": "من حقوق النساء في الزواج [٣-٤]",
+        "ayah": "[4-3] [٣-٤]"
+      },
+      {
+        "id": "1.3",
+        "en": "Rights of mentally disabled [5]",
+        "ar": "حقوق النساء اللاتي لا يستطعن إدارة أموالهن  [٥]",
+        "ayah": "[5] [٥]"
+      },
+      {
+        "id": "1.4",
+        "en": "Inheritance and justice in the family [10-6] ",
+        "ar": "القوانين العامة للحقوق الإنسانية عند تكوين الأسرة ومن الإرث والانتصار للمظلومين [٦-١٠]",
+        "ayah": "[10-6] [٦-١٠]"
+      },
+      {
+        "id": "1.5",
+        "en": "Establishing justice in society [14-11]",
+        "ar": "الحقوق الإرثية التفصيلية التي تضمن التكامل، وتحقق العدل في بحث الحياة الإنسانية [١١-١٤]",
+        "ayah": "[14-11] [١١-١٤]"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title_en": "Growth of a strong and stable family structure [25-15]",
+    "title_ar": "المحور الثاني: نمو الأسرة المركزية [١٥-٢٥]",
+    "ayah": "[25-15] [١٥-٢٥]",
+    "subtopics": [
+      {
+        "id": "2.1",
+        "en": "Marriage laws for stability and social security [18-15]",
+        "ar": "أهم قوانين الزواج التي تُحسن بناء الأسرة، وتحافظ على حق الإنسانية في الاستقرار والانتشار [١٥-١٨]",
+        "ayah": "[18-15] [١٥-١٨]"
+      },
+      {
+        "id": "2.2",
+        "en": "Women’s responsibilities and the wisdom behind marriage rules [21-19]",
+        "ar": "حقوق المرأة الزوجية، وتفسير المرافقة في الصفة معها  [١٩-٢١]",
+        "ayah": "[21-19] [١٩-٢١]"
+      },
+      {
+        "id": "2.3",
+        "en": "List of forbidden types of marriage [23-22]",
+        "ar": "بيان قائمة المحرمات من النساء في الزواج [٢٣-٢٢]",
+        "ayah": "[23-22] [٢٣-٢٢]"
+      },
+      {
+        "id": "2.4",
+        "en": "Marriage to orphans and what is allowed [25-24]",
+        "ar": "حقوق اليتامى في الزواج، وما يجوز وما لا يجوز في الزواج [٢٤-٢٥]",
+        "ayah": "[25-24] [٢٤-٢٥]"
+      }
+    ]
+  }
+]
