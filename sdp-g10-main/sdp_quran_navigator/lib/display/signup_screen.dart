@@ -2,59 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:sdp_quran_navigator/models/user.dart' as app_user;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sdp_quran_navigator/display/quran_navigator_screen.dart';
+
 final supabase = Supabase.instance.client;
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
-class _SignupScreenState extends State<SignupScreen>{
-  final formkey=GlobalKey<FormState>();
+
+class _SignupScreenState extends State<SignupScreen> {
+  final formkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  List<String> userType = ["Admin", "User", "Author","Reviewer"];
-  late DropdownButtonFormField<String> dropdownButtonFormField;
-  late DropdownButtonFormField<String> dropdownButtonFormField1;
-
-  // Define the userPay list
+  
+  List<String> userType = ["Admin", "User", "Author", "Reviewer"];
   List<String> userPay = ["Free", "Premium"];
-
-  @override
-  void initState() {
-    super.initState();
-    dropdownButtonFormField = DropdownButtonFormField<String>(
-      items: userType.map((userType) {
-        return DropdownMenuItem<String>(
-          value: userType,
-          child: Text(userType),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          // Handle the selected value here
-        });
-      },
-    );
-
-    dropdownButtonFormField1 = DropdownButtonFormField<String>(
-      items: userPay.map((userPay) {
-        return DropdownMenuItem<String>(
-          value: userPay,
-          child: Text(userPay),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          // Handle the selected value here
-        });
-      },
-    );
-  }
-
+  
+  String? selectedUserType;
+  String? selectedUserPay;
+  
   bool isPasswordVisible = false;
   bool isLoading = false;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -62,6 +34,7 @@ class _SignupScreenState extends State<SignupScreen>{
     _confirmPasswordController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,14 +93,57 @@ class _SignupScreenState extends State<SignupScreen>{
                     const SizedBox(height: 10),
                     TextFormField(
                       controller: _confirmPasswordController,
-                      decoration:
-                          InputDecoration(labelText: 'Confirm Password'),
+                      decoration: InputDecoration(labelText: 'Confirm Password'),
                       obscureText: !isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please confirm your password';
                         } else if (value != _passwordController.text) {
                           return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    DropdownButtonFormField<String>(
+                      value: selectedUserType,
+                      items: userType.map((userType) {
+                        return DropdownMenuItem<String>(
+                          value: userType,
+                          child: Text(userType),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedUserType = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: 'User Type'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a user type';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    DropdownButtonFormField<String>(
+                      value: selectedUserPay,
+                      items: userPay.map((userPay) {
+                        return DropdownMenuItem<String>(
+                          value: userPay,
+                          child: Text(userPay),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedUserPay = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: 'Payment Type'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a payment type';
                         }
                         return null;
                       },
@@ -150,32 +166,24 @@ class _SignupScreenState extends State<SignupScreen>{
                                 email: response.user!.email!,
                                 password: _passwordController.text,
                                 uid: response.user!.id,
-                                userType: dropdownButtonFormField.value,
-                                userPay: dropdownButtonFormField1.value
+                                userType: selectedUserType ?? 'User',
+                                userPay: selectedUserPay ?? 'Free',
                               );
 
                               await supabase
                                   .from('users')
                                   .upsert(user.toMap());
 
-                              // Handle user creation success (e.g., navigate to another screen)
-                              Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                QuranNavigator(
-                                                    ),
-                                          ),
-                                        );
+                              // Navigate to the Quran Navigator screen
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => QuranNavigator(),
+                                ),
+                              );
                             } else {
                               throw Exception('User creation failed');
                             }
-
-                                    await supabase
-                                        .from('users')
-                                        .upsert(User);
-// Handle user creation success (e.g., navigate to another screen)
-Navigator.pop(context, User);
                           } catch (e) {
                             // Handle error (e.g., show a snackbar)
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -202,7 +210,3 @@ Navigator.pop(context, User);
     );
   }
 }
-
-extension on DropdownButtonFormField<String> {
-  get value => null;
-} 

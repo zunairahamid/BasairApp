@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sdp_quran_navigator/display/quran_navigator_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 final supabase = Supabase.instance.client;
 
 class SigninScreen extends ConsumerStatefulWidget {
@@ -10,9 +11,9 @@ class SigninScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SigninScreen> createState() => _SigninScreenState();
 }
+
 class _SigninScreenState extends ConsumerState<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -36,14 +37,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                QuranNavigator(
-),
-                                          ),
-                                        );
+            Navigator.pop(context);
           },
         ),
       ),
@@ -124,19 +118,35 @@ Navigator.push(
                         setState(() {
                           isLoading = true;
                         });
-                        // Perform sign-in logic here
-                        await Future.delayed(const Duration(seconds: 2));
-                        setState(() {
-                          isLoading = false;
-                        });
-                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                QuranNavigator(
-),
-                                          ),
-                                        );
+                        
+                        try {
+                          // Perform actual sign-in with Supabase
+                          final response = await supabase.auth.signInWithPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                          
+                          if (response.user != null) {
+                            // Navigate to QuranNavigator on successful sign-in
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => QuranNavigator(),
+                              ),
+                            );
+                          } else {
+                            throw Exception('Sign in failed');
+                          }
+                        } catch (e) {
+                          // Handle error (e.g., show a snackbar)
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error: $e')),
+                          );
+                        } finally {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                     child: isLoading
@@ -144,11 +154,11 @@ Navigator.push(
                         : const Text("Sign In"),
                   ),
                 ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-          } 
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
