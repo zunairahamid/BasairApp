@@ -1,0 +1,114 @@
+SURAH_SCHEMA = {
+  "type": "object",
+  "properties": {
+    # Basic surah details (instead of being inside 'publication')
+    "surah": {
+      "type": "object",
+      "properties": {
+        # Unique identifier of the surah, e.g., "4" for Surah An-Nisa
+        "surahId":   {"type": "string"},
+        # Name of the surah (Arabic title, e.g., "النساء")
+        "surahName": {"type": "string"}
+      },
+      "required": ["surahId","surahName"]
+    },
+
+    # Tafsir / Publication details for the source book
+    "tafsir": {
+      "type": "object",
+      "properties": {
+        # Unique identifier for the tafsir/book entry
+        "tafsirId": {"type": "string"},
+        # Title of the tafsir/book (e.g., "تفسير سورة النساء")
+        "title": {"type": "string"},
+        # Author of the tafsir/book (e.g., "الأستاذ الدكتور عبد السلام مقبل المجيدي")
+        "author": {"type": "string"},
+        "publisher": {"type": "string"},  # دار النشر
+        "year": {"type": "integer"},      # سنة النشر
+        "location": {"type": "string"},   # مكان النشر (الدوحة - قطر)
+        "isbn": {"type": "string"},       # الرقم الدولي المعياري للكتاب
+        # Link to the surah this tafsir belongs to
+        "surahId": {"type": "string"},
+        # State of the tafsir (e.g., draft, approved)
+        "state": {"type": "string", "enum": ["draft", "approved"]}
+      },
+      "required": ["tafsirId","title","author","publisher","year","location","isbn","surahId","state"]
+    },
+
+    # Main thematic units of the surah (المحاور)
+    "mahawer": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id":        {"type": "string"},  # unique ID for the محور
+          "type":      {"type": "string"},  # e.g., "محور", "مقدمة", "خاتمة"
+          "sequence":  {"type": "string"},  # label or order (e.g., "المحور الأول")
+          "title":     {"type": "string"},  # title of the محور
+          "text":      {"type": "string"},  # description/summary of the محور
+          "ayat":      {"type": "array", "items": {"type": "integer"}}, # list of ayah numbers in this محور
+
+          # Boolean flags for مقدمة / خاتمة if applicable
+          "isMuqadimah": {"type": "boolean", "nullable": true},
+          "isKhatimah":  {"type": "boolean", "nullable": true},
+
+          # Subsections of each محور (e.g., "قسم", "حصن", "بصيرة")
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id":       {"type": "string"},   # unique ID for section
+                "type":     {"type": "string"},   # type of section (قسم, حصن, صنف)
+                "sequence": {"type": "string"},   # e.g., "القسم الأول"
+                "title":    {"type": "string", "nullable": true}, # optional section title
+                "text":     {"type": "string"},   # content/summary of the section
+                "ayat":     {"type": "array", "items": {"type": "integer"}}, # list of ayah numbers
+                "conclusion": {"type": "string", "nullable": true}, # optional concluding remark
+
+                # Deeper nested subSections (e.g., الفصول under الأصناف)
+                "subSections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id":       {"type": "string"},
+                      "type":     {"type": "string"},   # e.g., فصل
+                      "sequence": {"type": "string"},
+                      "text":     {"type": "string"},
+                      # List of ayah numbers (optional)
+                      "ayat":     {"type": "array", "items": {"type": "integer"}, "nullable": true},
+                      "conclusion": {"type": "string", "nullable": true},
+
+                      # Optional: smaller narrative units inside a فصل (e.g., موضوع)
+                      "topics": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id":       {"type": "string"},
+                            "type":     {"type": "string"},   # e.g., "موضوع"
+                            "sequence": {"type": "string"},
+                            "text":     {"type": "string"},
+                            "ayat":     {"type": "array", "items": {"type": "integer"}, "nullable": true}
+                          },
+                          "required": ["id","type","sequence","text"]
+                        },
+                        "nullable": true
+                      }
+                    },
+                    "required": ["id","type","sequence","text"]
+                  },
+                  "nullable": true
+                }
+              },
+              "required": ["id","type","sequence","text","ayat"]
+            }
+          }
+        },
+        "required": ["id","type","sequence","title","text","ayat","sections"]
+      }
+    }
+  },
+  "required": ["surah","tafsir","mahawer"]
+}
